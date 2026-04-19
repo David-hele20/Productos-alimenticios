@@ -1,0 +1,39 @@
+@startuml
+    abstract class Producto{
+        #codigo: int 
+        #descripcion: String 
+        #precio: double
+        +producto(codigo: int, descripcion: String, precio: double)
+        +{abstract} calcularPrecioVenta(): double
+        +toString(): String
+    }
+        
+    class Perecedero{
+        -diasACaducar: int 
+        +Perecedero(codigo: int, descripcion: String, precio: double, diasACaducar: int)
+        +calcularPrecioVenta(): double
+    }
+
+    class NoPerecedero{
+        - {static}AUMENTO_TIPO_A: double = 0.03
+        - {static}AUMENTO_TIPO_B: double = 0.02
+        - {static}AUMENTO_TIPO_C: double = 0.015
+        -tipo: char 
+        +noPerecedero(codigo: int, descripcion: String, precio: double, tipo: char)
+        +calcularPrecioVenta(): double
+        +validarTipo(tipo:char): char
+    }
+
+    class Empresa{
+        listaProductos:  Arraylist<Producto>
+        +Empresa()
+        +agregarProducto(producto: Producto):void
+        +mostarPrroductos(): void
+        +run(): void
+    }
+
+    Producto <|-- Perecedero: es un
+    Producto <|-- NoPerecedero: es un
+    Empresa "1" *-- "*" Producto: tiene
+
+@enduml
